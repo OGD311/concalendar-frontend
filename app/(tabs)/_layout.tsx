@@ -23,7 +23,7 @@ export default function TabLayout() {
             name='bookmark'
             options={{
                 title: "Bookmarks",
-                tabBarIcon: ({ color }) => <FontAwesome size={28} name='bookmark' color={color} />
+                tabBarIcon: ({ color }) => <FontAwesome size={24} name='bookmark' color={color} />
             }}
             listeners={{
                 tabPress: handleTabPress
