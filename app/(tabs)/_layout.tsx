@@ -40,5 +40,12 @@ export default function TabLayout() {
                 tabPress: handleTabPress
             }}
         />
+
+        <Tabs.Screen
+            name='[convention]'
+            options={{
+                href: null
+            }}    
+        />
     </Tabs>
 }
