@@ -20,7 +20,7 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen 
-            name='bookmark'
+            name='bookmarks'
             options={{
                 title: "Bookmarks",
                 tabBarIcon: ({ color }) => <FontAwesome size={24} name='bookmark' color={color} />
