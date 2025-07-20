@@ -12,7 +12,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Button title="Test" onPress={() => router.navigate('conventions')} />
+      <Button title="Test" onPress={() => router.push("/cons") } />
     </View>
   );
 }
