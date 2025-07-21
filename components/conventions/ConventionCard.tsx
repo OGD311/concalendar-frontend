@@ -6,7 +6,7 @@ export default function ConventionCard({ convention } : { convention: CONVENTION
     const router = useRouter();
 
     return (
-        <TouchableOpacity onPress={() => router.navigate(`${convention.name}`)}>
+        <TouchableOpacity onPress={() => router.navigate(`/${convention.name}`)}>
             <Text>
                 {convention.name}
             </Text>
