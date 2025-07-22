@@ -6,10 +6,12 @@ import "../global.css";
 
 export default function RootLayout() {
   useEffect(() => {
+    
     async function initialiseApp() {
-      await InitDb();
-      const didSync = await remoteSync();
-      console.log(didSync ? 'Data synced' : 'No sync needed'); 
+      await InitDb().then(async () => {
+        const didSync = await remoteSync();
+        console.log(didSync ? 'Data synced' : 'No sync needed'); 
+      });
     }
 
     initialiseApp();
