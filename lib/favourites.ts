@@ -6,10 +6,14 @@ export async function getAllFavourites(): Promise<CONVENTION[]> {
         const db = await getDb();
 
         const result = await db.getAllAsync(`
-            SELECT conventions.*
+            SELECT conventions.*,
+            CASE 
+                WHEN favourites.convention_id IS NOT NULL THEN 1
+                ELSE 0
+            END AS is_favourite
             FROM conventions 
             INNER JOIN favourites ON conventions.id = favourites.convention_id
-            ORDER BY conventions.start_date DESC;    
+            ORDER BY conventions.date_start DESC;    
         `);
 
         return result as CONVENTION[];
