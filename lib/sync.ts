@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import insertConvention from './dbFunctions';
+import { insertConvention } from './dbFunctions';
 
 const LAST_HASH_KEY = "last_data_hash";
 const LAST_DATE_KEY = "last_data_fetched_timestamp"
