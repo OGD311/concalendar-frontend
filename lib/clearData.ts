@@ -3,18 +3,17 @@ import { getDb } from "./db";
 import InitDb from "./initDb";
 
 export default async function clearData() {
-    
-    await AsyncStorage.clear();
-    try {
-        const db = await getDb();
+  await AsyncStorage.clear();
 
-        await db.getFirstAsync(`
-            DROP TABLE IF EXISTS conventions;
-            DROP TABLE IF EXISTS favourites;
-        `);
+  try {
+    const db = await getDb();
 
-    } catch (error) {
-        console.error("Database delete failed: ", error);
-    }
-    await InitDb();
+    await db.runAsync(`DROP TABLE IF EXISTS conventions`);
+    await db.runAsync(`DROP TABLE IF EXISTS favourites`);
+
+  } catch (error) {
+    console.error("Database delete failed: ", error);
+  }
+
+  await InitDb();
 }
