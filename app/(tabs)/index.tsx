@@ -2,6 +2,7 @@ import ConventionCard from "@/components/conventions/ConventionCard";
 import Loader from "@/components/loader";
 import { CONVENTION } from "@/constants/interfaces";
 import { getAllConventions } from "@/lib/dbFunctions";
+import { addFavourite, removeFavourite } from "@/lib/favourites";
 import { remoteSync } from "@/lib/sync";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -40,6 +41,21 @@ export default function Index() {
   useEffect(() => {
     loadConventions()
   }, []);
+
+
+  const toggleFavourite = async (id: number, isFavourite: boolean) => {
+    if (isFavourite) {
+      await removeFavourite(id);
+    } else {
+      await addFavourite(id);
+    }
+
+    setConventions(prev =>
+      prev.map(c =>
+        c.id === id ? { ...c, is_favourite: !isFavourite } : c
+      )
+    );
+  };
   
   return (
     <View 
@@ -60,7 +76,7 @@ export default function Index() {
         {!loading && !error && conventions.length > 0 && (
           <>
             {conventions.map((convention) => (
-              <ConventionCard key={convention.id} convention={convention}/>
+              <ConventionCard key={convention.id} convention={convention} onToggleFavourite={toggleFavourite}/>
             ))}
           </>
         )}
