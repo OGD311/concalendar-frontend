@@ -17,4 +17,7 @@ export interface CONVENTION {
 
   latitude?: number | null;
   longitude?: number | null;
+
+  // Use for favourites
+  is_favourite: boolean
 }
