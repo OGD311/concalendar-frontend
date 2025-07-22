@@ -2,6 +2,7 @@ import InitDb from "@/lib/initDb";
 import { remoteSync } from "@/lib/sync";
 import { Stack } from "expo-router";
 import { useEffect } from "react";
+import { StatusBar } from "react-native";
 import "../global.css";
 
 export default function RootLayout() {
@@ -18,8 +19,11 @@ export default function RootLayout() {
   }, []);
 
   return (
+    <>
+    <StatusBar barStyle={'dark-content' } />
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     </Stack>
+    </>
   )
 }
