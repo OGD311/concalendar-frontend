@@ -59,7 +59,7 @@ export async function getAllConventions(): Promise<CONVENTION[]> {
     try {
         const db = await getDb();
 
-        const result = await db.getAllAsync('SELECT * FROM conventions WHERE active = 1');
+        const result = await db.getAllAsync('SELECT * FROM conventions WHERE active = 1 ORDER BY dateStart DESC');
 
         return result as CONVENTION[];
     } catch (error) {
@@ -80,6 +80,22 @@ export async function getConvention(name: string): Promise<CONVENTION | null> {
         return result as CONVENTION;
     } catch (error) {
         console.error("Database fetch failed: ", error);
+        return null;
+    }
+}
+
+
+export async function clearDB() {
+    try {
+        const db = await getDb();
+
+        const result = await db.getFirstAsync(
+            `DELETE FROM conventions;`
+        );
+
+        return result as CONVENTION;
+    } catch (error) {
+        console.error("Database delete failed: ", error);
         return null;
     }
 }
