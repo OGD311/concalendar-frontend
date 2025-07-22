@@ -1,3 +1,4 @@
+import InitDb from "@/lib/initDb";
 import { remoteSync } from "@/lib/sync";
 import { Stack } from "expo-router";
 import { useEffect } from "react";
@@ -8,6 +9,7 @@ export default function RootLayout() {
     async function initialiseApp() {
       const didSync = await remoteSync();
       console.log(didSync ? 'Data synced' : 'No sync needed'); 
+      await InitDb();
     }
 
     initialiseApp();
