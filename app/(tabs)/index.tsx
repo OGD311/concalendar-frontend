@@ -1,11 +1,11 @@
 import ConventionCard from "@/components/conventions/ConventionCard";
+import Loader from "@/components/loader";
 import { CONVENTION } from "@/constants/interfaces";
 import { getAllConventions } from "@/lib/dbFunctions";
 import { remoteSync } from "@/lib/sync";
-import { Button } from "@react-navigation/elements";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { RefreshControl, ScrollView, Text, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
@@ -13,7 +13,7 @@ export default function Index() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [conventions, setConventions] = useState<CONVENTION[]>([]);
-
+  const [refreshing, setRefreshing] = useState(false);
 
   async function loadConventions() {
     try {
@@ -30,9 +30,11 @@ export default function Index() {
   }
 
   async function reLoadConventions() {
-    await remoteSync().then(
-      loadConventions
-    );
+    setRefreshing(true);
+    await remoteSync().then(() => {
+      loadConventions();
+      setRefreshing(false);
+    });
   }
 
   useEffect(() => {
@@ -40,28 +42,30 @@ export default function Index() {
   }, []);
   
   return (
-    <View className="items-center justify-center flex-1 bg-gray-100">
-      <Text className="text-xl font-bold text-blue-500">Test with NativeWind!</Text>
-      <Text className="mt-4 text-gray-600">This should be styled with Tailwind CSS</Text>
-      <Button
-        onPressIn={async () => {
-          await reLoadConventions();
-        }}
+    <View 
+      className="flex flex-col justify-center h-full text-center" 
+    >
+      <View className="h-16 bg-white" />
+      <ScrollView
+        className="w-full"
+        contentContainerClassName="flex flex-grow justify-center items-center"
+        refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={reLoadConventions} />
+        }
       >
-        Update
-      </Button>
+        {loading && <Loader />}
+        {!loading && error && <Text>Error</Text>}
 
-      {loading && <Text>Loading</Text>}
-      {!loading && error && <Text>Error</Text>}
-      {!loading && !error && conventions.length === 0 && <Text>No Conventions</Text>}
-      {!loading && !error && conventions.length > 0 && (
-        <View className="items-center w-full mt-4">
-          {conventions.map((convention) => (
-            <ConventionCard key={convention.id} convention={convention}/>
-          ))}
-        </View>
-      )}
+        {!loading && !error && conventions.length === 0 && <Text>No Conventions</Text>}
+        {!loading && !error && conventions.length > 0 && (
+          <>
+            {conventions.map((convention) => (
+              <ConventionCard key={convention.id} convention={convention}/>
+            ))}
+          </>
+        )}
 
+      </ScrollView>
     </View>
   );
 }
