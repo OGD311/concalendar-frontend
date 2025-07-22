@@ -4,13 +4,11 @@ import { CONVENTION } from "@/constants/interfaces";
 import { getAllConventions } from "@/lib/dbFunctions";
 import { addFavourite, removeFavourite } from "@/lib/favourites";
 import { remoteSync } from "@/lib/sync";
-import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useEffect, useState } from "react";
 import { RefreshControl, ScrollView, Text, View } from "react-native";
 
 export default function Index() {
-  const router = useRouter();
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [conventions, setConventions] = useState<CONVENTION[]>([]);
@@ -41,6 +39,12 @@ export default function Index() {
   useEffect(() => {
     loadConventions()
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadConventions();
+    }, [])
+  );
 
 
   const toggleFavourite = async (id: number, isFavourite: boolean) => {
