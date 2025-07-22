@@ -1,4 +1,6 @@
-import { Text, View } from "react-native";
+import clearData from "@/lib/clearData";
+import { Button } from "@react-navigation/elements";
+import { View } from "react-native";
 
 export default function Settings() {
   return (
@@ -9,7 +11,7 @@ export default function Settings() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Button onPressIn={async () => {await clearData()}}>Reset App Data</Button>
     </View>
   );
 }
