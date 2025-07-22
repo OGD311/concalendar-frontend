@@ -67,3 +67,19 @@ export async function getAllConventions(): Promise<CONVENTION[]> {
         return [];
     }
 }
+
+export async function getConvention(name: string): Promise<CONVENTION | null> {
+    try {
+        const db = await getDb();
+
+        const result = await db.getFirstAsync(
+            'SELECT * FROM conventions WHERE name = ?',
+            [name]
+        );
+
+        return result as CONVENTION;
+    } catch (error) {
+        console.error("Database fetch failed: ", error);
+        return null;
+    }
+}
