@@ -1,10 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import insertConvention from './dbFunctions';
 
 const LAST_HASH_KEY = "last_data_hash";
 const LAST_DATE_KEY = "last_data_fetched_timestamp"
 
 export async function remoteSync(): Promise<boolean> {
     console.log("Syncing...")
+    AsyncStorage.setItem(LAST_HASH_KEY, "");
 
     const remoteHash = await fetchRemoteHash();
     const localHash = await AsyncStorage.getItem(LAST_HASH_KEY);
@@ -37,4 +39,15 @@ async function fetchRemoteHash(): Promise<string> {
 
 async function fetchRemoteData(timestamp: string) {
     console.log(timestamp)
+    const result = await fetch(API_URL + "conventions/" + timestamp);
+    const data = await result.json();
+    const conventions = data.data;
+    
+    if (Array.isArray(conventions)) {
+        for (const convention of conventions) {
+            await insertConvention({ convention });
+        }
+    } else {
+        console.log(conventions);
+    }
 }
