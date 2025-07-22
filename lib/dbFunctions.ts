@@ -59,7 +59,18 @@ export async function getAllConventions(): Promise<CONVENTION[]> {
     try {
         const db = await getDb();
 
-        const result = await db.getAllAsync('SELECT * FROM conventions WHERE active = 1 ORDER BY date_start DESC');
+        const result = await db.getAllAsync(`
+            SELECT 
+            conventions.*,
+            CASE 
+                WHEN favourites.convention_id IS NOT NULL THEN 1
+                ELSE 0
+            END AS is_favourite
+            FROM conventions
+            LEFT JOIN favourites ON conventions.id = favourites.convention_id
+            WHERE conventions.active = 1
+            ORDER BY conventions.date_start DESC;
+        `);
 
         return result as CONVENTION[];
     } catch (error) {

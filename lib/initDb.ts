@@ -14,7 +14,7 @@ export default async function InitDb() {
                 date_end TEXT,
                 location TEXT,
                 venue TEXT,
-                
+
                 website_url TEXT,
                 attendee_count INTEGER,
 
@@ -27,6 +27,13 @@ export default async function InitDb() {
             );
 
             CREATE UNIQUE INDEX IF NOT EXISTS idx_unique_name ON conventions(name);
+        
+        
+            CREATE TABLE IF NOT EXISTS favourites (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                convention_id INTEGER NOT NULL,
+                FOREIGN KEY (convention_id) REFERENCES conventions(id) ON DELETE CASCADE
+            );
         `);
 
         console.log("DB done")

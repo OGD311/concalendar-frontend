@@ -7,9 +7,10 @@ export default async function clearData() {
     try {
         const db = await getDb();
 
-        await db.getFirstAsync(
-            `DELETE FROM conventions;`
-        );
+        await db.getFirstAsync(`
+            DELETE FROM conventions;
+            DELETE FROM favourites;
+        `);
 
     } catch (error) {
         console.error("Database delete failed: ", error);
