@@ -45,6 +45,7 @@ async function fetchRemoteData(timestamp: string) {
     
     if (Array.isArray(conventions)) {
         for (const convention of conventions) {
+            console.log(convention.dateStart)
             await insertConvention({ convention });
         }
     } else {

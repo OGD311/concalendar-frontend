@@ -10,8 +10,8 @@ export async function insertConvention({ convention } : { convention: CONVENTION
             `INSERT INTO conventions (
                 name,
                 description,
-                dateStart,
-                dateEnd,
+                date_start,
+                date_end,
                 location,
                 venue,
                 website_url,
@@ -25,8 +25,8 @@ export async function insertConvention({ convention } : { convention: CONVENTION
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?)
             ON CONFLICT(name) DO UPDATE SET
                 description = excluded.description,
-                dateStart = excluded.dateStart,
-                dateEnd = excluded.dateEnd,
+                date_start = excluded.date_start,
+                date_end = excluded.date_end,
                 location = excluded.location,
                 venue = excluded.venue,
                 website_url = excluded.website_url,
@@ -38,11 +38,11 @@ export async function insertConvention({ convention } : { convention: CONVENTION
             [
                 convention.name,
                 convention.description ?? null,
-                convention.dateStart ?? null,
-                convention.dateEnd ?? null,
-                convention.location ?? null,
+                convention.date_start,
+                convention.date_end,
+                convention.location,
                 convention.venue ?? null,
-                convention.website_url ?? null,
+                convention.website_url,
                 convention.attendee_count ?? null,
                 convention.active ? 1 : 0,
                 convention.latitude ?? null,
@@ -80,22 +80,6 @@ export async function getConvention(name: string): Promise<CONVENTION | null> {
         return result as CONVENTION;
     } catch (error) {
         console.error("Database fetch failed: ", error);
-        return null;
-    }
-}
-
-
-export async function clearDB() {
-    try {
-        const db = await getDb();
-
-        const result = await db.getFirstAsync(
-            `DELETE FROM conventions;`
-        );
-
-        return result as CONVENTION;
-    } catch (error) {
-        console.error("Database delete failed: ", error);
         return null;
     }
 }

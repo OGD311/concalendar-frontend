@@ -3,8 +3,8 @@ export interface CONVENTION {
   name: string;
   description?: string | null;
 
-  dateStart: string;
-  dateEnd: string;
+  date_start: string;
+  date_end: string;
   location: string;
   venue?: string | null;
 
@@ -14,7 +14,7 @@ export interface CONVENTION {
   active: boolean;
   created_at: string;
   updated_at: string;
-  
+
   latitude?: number | null;
   longitude?: number | null;
 }

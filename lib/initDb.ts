@@ -9,10 +9,12 @@ export default async function InitDb() {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL UNIQUE,
                 description TEXT,
-                dateStart TEXT,
-                dateEnd TEXT,
+
+                date_start TEXT,
+                date_end TEXT,
                 location TEXT,
                 venue TEXT,
+                
                 website_url TEXT,
                 attendee_count INTEGER,
 
