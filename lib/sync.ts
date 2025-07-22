@@ -29,7 +29,7 @@ export async function remoteSync(): Promise<boolean> {
     
 }
 
-const API_URL = "http://192.168.0.52/"
+const API_URL = "http://192.168.0.131/"
 
 async function fetchRemoteHash(): Promise<string> {
     const result = await fetch(API_URL + "hash");
