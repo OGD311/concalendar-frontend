@@ -1,3 +1,5 @@
 # Concalendar-Frontend
 
-This is a repository containing the code for the frontend app, which allows users to view upcoming conventions across a range of categories. It pulls data from a backend server, with all data then stored locally for offline use until a new update occurs to the data on the backend, or the user manually refreshes.
+This repository contains the code for the **Concalendar** frontend application. It allows users to browse upcoming fan conventions across a variety of categories including anime, comics and gaming.
+
+The app fetches data from a backend server and caches it locally for offline use. Cached data is updated either when a change is detected on the backend or when the user manually triggers a refresh.
